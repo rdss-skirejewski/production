@@ -1,0 +1,24 @@
+#override defaults for dev
+version: "3.7"
+
+services:
+    shopware:
+        image: dockware/play:latest
+        container_name: shopware
+        ports:
+            - "80:80"
+        volumes:
+            - "db_volume:/var/lib/mysql"
+            - /Users/Sebastian.Kirejewski/projekte/sw6prod:/var/www/html:rw
+        user: "root"
+        networks:
+            - web
+
+
+volumes:
+    db_volume:
+        driver: local
+
+networks:
+    web:
+        external: true
