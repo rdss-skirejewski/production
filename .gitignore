@@ -2,6 +2,7 @@ custom/*
 !custom/plugins/.gitkeep
 !custom/static-plugins/
 !custom/plugins/PennyTestPlugin/
+!custom/plugins/PennyTestPlugin/*
 
 /vendor/
 /bin/vendor/
