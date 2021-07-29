@@ -11,11 +11,25 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+        <service id="PennyTestPlugin\Controller\TestProductController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="PennyTestPlugin\Controller\StoreFrontTestProductController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
         <service id="PennyTestPlugin\Extension\Content\Product\PennyProductExtension">
             <tag name="shopware.entity.extension"/>
         </service>
         <service id="ct.command.add_custom_field" class="PennyTestPlugin\Command\AddCustomFieldSetsCommand" >
             <argument type="service" id="custom_field_set.repository"/>
+            <tag name="console.command"/>
+        </service>
+        <service class="PennyTestPlugin\Command\MoveVariantCommand" id="penny_test_plugin.command.move_variant_command">
+            <argument type="service" id="product.repository"/>
             <tag name="console.command"/>
         </service>
     </services>
