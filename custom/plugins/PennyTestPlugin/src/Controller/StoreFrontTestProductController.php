@@ -3,7 +3,9 @@
 namespace PennyTestPlugin\Controller;
 
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
+use Shopware\Core\System\SalesChannel\NoContentResponse;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
+use Shopware\Core\System\SalesChannel\StoreApiResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class StoreFrontTestProductController extends AbstractController
 {
     /**
-     * @Route(path="/store-api/testproduct/{productId}", name="store-api.testproduct", methods={"GET"})
+     * @Route(path="/store-api/penny/{productId}", name="store-api.penny", methods={"GET"})
      *
-     * @return JsonResponse
+     * @param string $productId
+     * @param SalesChannelContext $context
+     *
+     * @return StoreApiResponse
      */
-    public function getTestproduct(string $productId, SalesChannelContext $context)
+    public function getTestproduct(string $productId, SalesChannelContext $context): StoreApiResponse
     {
-        return new JsonResponse([$productId => true]);
+        return new NoContentResponse();
     }
 }
