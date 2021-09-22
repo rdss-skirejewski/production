@@ -43,20 +43,23 @@ class GenerateProductsViaApiCommand extends Command
         $io->comment('create');
 
         $bulkSize = 10;
-        $productAmount = 3000;
+        $productAmount = 1;
         $count = 0;
         $start = microtime(true);
 
         while ($count < $productAmount) {
             $count += $bulkSize;
+            $payloads = $this->getPayloads($bulkSize);
             $syncOperation = new SyncOperation(
                 'write',
                 'product',
                 'upsert',
-                $this->getPayloads($bulkSize),
+                $payloads,
             );
 
+            $orderNumbers = array_column($payloads, 'productNumber');
             $io->info('syncing another batch of ' . $bulkSize . ' products');
+            $io->info('Adding new order numbers ' . implode(', ', $orderNumbers));
 
             $this->syncService->sync(
                 [
@@ -81,7 +84,7 @@ class GenerateProductsViaApiCommand extends Command
         foreach (range(0, $limit) as $count) {
             $payloads[] = $this->getPayload(
                 Uuid::randomHex(),
-                'SW1000' . $faker->randomNumber(8),
+                'SW1337' . $faker->randomNumber(8),
                 $faker->text(50),
                 $faker->numberBetween(1, 200)
             );
@@ -121,17 +124,20 @@ class GenerateProductsViaApiCommand extends Command
             "name" => $name,
             "visibilities" => [
                 [
-                    "id" => "f982f2132dd54e9b81a759467f9c250d",
+                    "id" => "1a9fdd57134947b6b8782f36ad962f6b",
                     "productId" => $id,
-                    "salesChannelId" => "27f88058a9e440d68b3544f6dc435e88",
+                    "salesChannelId" => "98432def39fc4624b33213a56b8c944d",
                     "visibility" => 30
                 ],
             ],
             "categories" => [
                 [
-                    "id" => "28c4d6c0e39540d18f8d4ff762f81642",
+                    "id" => "a515ae260223466f8e37471d279e6406",
                 ]
-            ]
+            ],
+            'customFields' => [
+                'penny_set_1' => "Test 123 Test",
+            ],
         ];
     }
 }
